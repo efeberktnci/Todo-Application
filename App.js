@@ -16,7 +16,7 @@ export default function App() {
   const [todo, setTodo] = useState('');
   const [todos, setTodos] = useState([]);
 
-  const saveTodos = async () => {
+  const saveTodos = async saveTodo => {
     try {
       await AsyncStorage.setItem("todos", JSON.stringify(saveTodo))
     } catch (error) {
@@ -32,6 +32,13 @@ export default function App() {
     }
   }
 
+  const deleteTodo =  async id =>{
+    const updatedTodos = todos?.filter(x => x.id !== id);
+    setTodos(updatedTodos)
+    saveTodos(updatedTodos)
+      
+  }
+
   const loadTodos = async() => {
     try {
       const storedData = await AsyncStorage.getItem("todos");
@@ -41,6 +48,25 @@ export default function App() {
     } catch (error) {
       
     }
+  }
+
+  const updateTodos = id => {
+    const existingTodo = todos?.find(x=> x.id === id)
+
+    if(!existingTodo){
+      return;
+    }
+
+    Alert.prompt("Edit Todo", "Update", newUpdateText => {
+      if(newUpdateText){
+        const updatedTodos = todos.map(item=> item?.id === id ? {...item,text: newUpdateText} : item,)
+        setTodos(updatedTodos)
+        saveTodos(updatedTodos)
+      }
+    },
+    "plain-text",
+     existingTodo.text,
+    )
   }
 
   useEffect(() => {
@@ -72,11 +98,11 @@ export default function App() {
               <Text>{item?.text}</Text>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button}>
-                  <Text style={styles.buttonText}>Delete</Text>
+                  <Text style={styles.buttonText} onPress={() => deleteTodo(item?.id)}>Delete</Text>
                 </TouchableOpacity>
               </View>
               <View style={ styles.butt}>
-                <TouchableOpacity style={[styles.button,styles.updateButton]}>
+                <TouchableOpacity style={[styles.button,styles.updateButton]} onPress={() => updateTodos (item?.id)}>
                   <Text style={styles.buttonText}>Update</Text>
                 </TouchableOpacity>
               </View>
