@@ -1,27 +1,41 @@
 import React from 'react';
-
-import { createStackNavigator } from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from '../pages/SplashScreen';
 import OnboardingScreen from '../pages/OnboardingScreen';
 import TaskListScreen from '../pages/TaskListScreen';
 import AddTaskScreen from '../pages/AddTaskScreen';
-import colors  from '../themes/Colors';
+import colors from '../themes/Colors';
+import ScreenName from '../constants/ScreenName';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   return (
-    <Stack.Navigator initialRouteName='TaskList' screenOptions={{
-      headerStyle:{
-        backgroundColor: colors.background.primary,
-      },
-      headerTintColor: colors.text,
-      headerBackTitleVisible: false,
-    }}>
-      <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-      <Stack.Screen name="TaskList" component={TaskListScreen} />
-      <Stack.Screen name="AddTask" component={AddTaskScreen} />
+    <Stack.Navigator
+      initialRouteName="Onboarding"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: colors.background.primary,
+        },
+        headerTintColor: colors.text,
+        headerBackTitleVisible: false,
+      }}>
+      <Stack.Screen
+        name={ScreenName.splash}
+        component={SplashScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={ScreenName.onboarding}
+        component={OnboardingScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={ScreenName.taskList}
+        component={TaskListScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen name={ScreenName.addTask} component={AddTaskScreen} />
     </Stack.Navigator>
   );
 }
