@@ -25,8 +25,8 @@ export default function App() {
   };
 
   const addTodo = () => {
-    if(todo){
-      const updatedTodos = [...todos,{id:Date.now(), text: todo}];
+    if(todos){
+      const updatedTodos = [...todos,{id:Date.now(), text: todos}];
       setTodos(updatedTodos);
       saveTodos(updatedTodos)
     }

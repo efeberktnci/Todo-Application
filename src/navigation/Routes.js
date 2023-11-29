@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 export default function Routes() {
   return (
     <Stack.Navigator
-      initialRouteName="Onboarding"
+      initialRouteName="Splash"
       screenOptions={{
         headerStyle: {
           backgroundColor: colors.background.primary,
